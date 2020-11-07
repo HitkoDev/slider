@@ -9,7 +9,12 @@ module.exports = {
     slow: 75,
     timeout: 0,
     ui: 'bdd',
-    require: "./test/register.js",
+    require: './test/register.js',
     recursive: true,
-    'watch-files': ['./test/**/*.spec.ts'],
-};
+    'watch-files': [
+        './src/**/*.ts'
+    ],
+    'spec': [
+        './src/**/*.spec.ts'
+    ]
+}

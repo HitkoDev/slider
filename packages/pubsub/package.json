@@ -28,7 +28,18 @@
         "dist"
     ],
     "devDependencies": {
-        "@types/node": "^14.14.6"
+        "@testdeck/mocha": "^0.1.2",
+        "@types/chai": "^4.2.14",
+        "@types/ioredis": "^4.17.7",
+        "@types/node": "^14.14.6",
+        "chai": "^4.2.0",
+        "ioredis-mock": "^5.1.0"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@task/utils": "^0.0.0",
+        "ioredis": "^4.19.2",
+        "reflect-metadata": "^0.1.13",
+        "rxjs": "^6.6.3",
+        "tsyringe": "^4.3.0"
+    }
 }
