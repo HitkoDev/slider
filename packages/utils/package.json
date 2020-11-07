@@ -1,0 +1,40 @@
+{
+    "name": "@task/utils",
+    "version": "0.0.0",
+    "private": true,
+    "license": "GPL-3.0",
+    "main": "dist/index.js",
+    "esnext": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.production.json",
+        "watch": "tsc -p tsconfig.production.json -w",
+        "test": "mocha --parallel",
+        "coverage": "nyc mocha",
+        "lint": "tslint --fix --project .",
+        "prepublishOnly": "yarn build"
+    },
+    "nyc": {
+        "extension": [
+            ".ts"
+        ],
+        "include": [
+            "src"
+        ],
+        "all": true
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "@testdeck/mocha": "^0.1.2",
+        "@types/node": "^14.14.6",
+        "@types/chai": "^4.2.14",
+        "chai": "^4.2.0"
+    },
+    "dependencies": {
+        "reflect-metadata": "^0.1.13",
+        "tsyringe": "^4.3.0"
+    }
+}
