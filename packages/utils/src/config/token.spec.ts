@@ -1,6 +1,6 @@
 import { suite, test } from '@testdeck/mocha'
 import { expect } from 'chai'
-import { container } from 'tsyringe'
+import { container, DependencyContainer } from 'tsyringe'
 import { createToken } from './token'
 
 // tslint:disable: no-unused-expression
@@ -8,27 +8,37 @@ import { createToken } from './token'
 @suite
 export class ConfigToken {
 
-    @test
-    public async createValueToken() {
-        const tokenName = 'VALUE_TOKEN'
-        const value = 'test'
+    childContainer: DependencyContainer
 
-        const token = createToken({ useValue: value }, tokenName)
+    before() {
+        this.childContainer = container.createChildContainer()
+    }
+
+    @test
+    public async createToken() {
+        const tokenName = 'TEST_TOKEN'
+
+        const token = createToken({ name: tokenName })
 
         expect(typeof token).to.equal('symbol')
         expect(token.toString()).to.equal(`Symbol(${tokenName})`)
-        expect(container.resolve(token)).to.equal(value)
+    }
+
+    @test
+    public async createValueToken() {
+        const value = 'test'
+
+        const token = createToken({ provider: { useValue: value } })
+
+        expect(this.childContainer.resolve(token)).to.equal(value)
     }
 
     @test
     public async createFactoryToken() {
-        const tokenName = 'FACTORY_TOKEN'
         const value = 'test'
 
-        const token = createToken({ useFactory: () => value }, tokenName)
+        const token = createToken({ provider: { useFactory: () => value } })
 
-        expect(typeof token).to.equal('symbol')
-        expect(token.toString()).to.equal(`Symbol(${tokenName})`)
-        expect(container.resolve(token)).to.equal(value)
+        expect(this.childContainer.resolve(token)).to.equal(value)
     }
 }

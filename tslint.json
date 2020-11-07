@@ -128,6 +128,16 @@
         "no-implicit-dependencies": [
             true,
             "dev"
-        ]
+        ],
+        "no-submodule-imports": false,
+        "no-object-literal-type-assertion": false,
+        "linebreak-style": false,
+        "max-classes-per-file": false,
+        "array-type": [
+            true,
+            "array-simple"
+        ],
+        "prettier": false,
+        "no-floating-promises": true
     }
 }
