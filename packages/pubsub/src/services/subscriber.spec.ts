@@ -4,7 +4,7 @@ import { merge } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { container, DependencyContainer } from 'tsyringe'
 import { RedisMock } from '../../test/services/redis'
-import { Redis, REDIS_AUTH, REDIS_URI } from './redis'
+import { Redis } from './redis'
 import { Subscriber } from './subscriber'
 
 // tslint:disable: no-unused-expression
@@ -14,14 +14,21 @@ export class SubscriberService {
 
     childContainer: DependencyContainer
     redis: Redis
+    pubClient: Redis
 
     before() {
         this.childContainer = container.createChildContainer()
         this.childContainer.register(Redis, { useToken: RedisMock })
-        this.childContainer.register(REDIS_URI, { useValue: 'redis://localhost:6379/5' })
-        this.childContainer.register(REDIS_AUTH, { useValue: '' })
 
         this.redis = this.childContainer.resolve(Redis)
+        // Create secondary redis client for subscription commands
+        this.pubClient = (this.redis as any).createConnectedClient() as Redis
+    }
+
+    after() {
+        this.redis.disconnect()
+        this.pubClient.disconnect()
+        container.clearInstances()
     }
 
     @test
@@ -30,9 +37,6 @@ export class SubscriberService {
         const value = 'test'
 
         const subscriber = this.childContainer.resolve(Subscriber)
-
-        // Create secondary redis client for publish commands
-        const client = (this.redis as any).createConnectedClient() as Redis
 
         const messages$ = subscriber.subscribe(channelName)
 
@@ -44,9 +48,9 @@ export class SubscriberService {
             .pipe(take(1))
             .toPromise()
 
-        await client.publish(channelName, value)
+        await this.pubClient.publish(channelName, value)
         // Should be ignored
-        await client.publish('otherChannel', 'otherValue')
+        await this.pubClient.publish('otherChannel', 'otherValue')
 
         // Cleanup
         await done
@@ -63,9 +67,6 @@ export class SubscriberService {
 
         const subscriber = this.childContainer.resolve(Subscriber)
 
-        // Create secondary redis client for publish commands
-        const client = (this.redis as any).createConnectedClient() as Redis
-
         const messages1$ = subscriber.subscribe(channel1)
         const sub1 = messages1$.subscribe(message => {
             expect(message).to.equal(value1)
@@ -76,12 +77,14 @@ export class SubscriberService {
             expect(message).to.equal(value2)
         })
 
-        const done = merge(messages1$, messages2$)
-            .pipe(take(2))
+        const done = merge(
+            messages1$.pipe(take(1)),
+            messages2$.pipe(take(1))
+        )
             .toPromise()
 
-        await client.publish(channel1, value1)
-        await client.publish(channel2, value2)
+        await this.pubClient.publish(channel1, value1)
+        await this.pubClient.publish(channel2, value2)
 
         // Cleanup
         await done

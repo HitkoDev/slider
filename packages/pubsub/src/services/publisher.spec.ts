@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import { container, DependencyContainer } from 'tsyringe'
 import { RedisMock } from '../../test/services/redis'
 import { Publisher } from './publisher'
-import { Redis, REDIS_AUTH, REDIS_URI } from './redis'
+import { Redis } from './redis'
 
 // tslint:disable: no-unused-expression
 
@@ -12,14 +12,20 @@ export class PublisherService {
 
     childContainer: DependencyContainer
     redis: Redis
+    subClient: Redis
 
     before() {
         this.childContainer = container.createChildContainer()
         this.childContainer.register(Redis, { useToken: RedisMock })
-        this.childContainer.register(REDIS_URI, { useValue: 'redis://localhost:6379/5' })
-        this.childContainer.register(REDIS_AUTH, { useValue: '' })
 
         this.redis = this.childContainer.resolve(Redis)
+        // Create secondary redis client for subscription commands
+        this.subClient = (this.redis as any).createConnectedClient() as Redis
+    }
+
+    after() {
+        this.redis.disconnect()
+        this.subClient.disconnect()
     }
 
     @test
@@ -33,13 +39,11 @@ export class PublisherService {
             channel: string
             message: string
         }>((resolve, reject) => {
-            // Create secondary redis client for subscription commands
-            const client = (this.redis as any).createConnectedClient() as Redis
-            client.on('message', (channel, message) => resolve({
+            this.subClient.on('message', (channel, message) => resolve({
                 channel,
                 message
             }))
-            client.subscribe(channelName, (err) => {
+            this.subClient.subscribe(channelName, (err) => {
                 if (err)
                     reject(err)
             })
