@@ -1,4 +1,4 @@
-import { promises } from 'fs'
+import { readFile } from 'fs/promises'
 import { promisify } from 'util'
 import { brotliDecompress } from 'zlib'
 
@@ -15,7 +15,7 @@ export async function loadAuthCertificate(x509?: string) {
         } catch (_e) { }
         if (!b64)
             try {
-                file = await promises.readFile(x509)
+                file = await readFile(x509)
             } catch (_e) { }
 
         pem = b64 || file

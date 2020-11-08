@@ -37,7 +37,7 @@ export class MongoRepository<T extends Model = Model, TCreateInput = BasicCreate
     async findById(id: ObjectID) {
         await this.initPromise
         const entity = await this.col.findOne({ _id: id } as FilterQuery<T>)
-        return entity ? this.instantiate(entity) : null
+        return entity ? this.instantiate(entity) : undefined
     }
 
     async create(data: TCreateInput) {
@@ -55,13 +55,13 @@ export class MongoRepository<T extends Model = Model, TCreateInput = BasicCreate
             { $set: data },
             { returnOriginal: false }
         )
-        return value ? this.instantiate(value) : null
+        return value ? this.instantiate(value) : undefined
     }
 
     async delete(id: ObjectID) {
         await this.initPromise
         const { value } = await this.col.findOneAndDelete({ _id: id } as FilterQuery<T>)
-        return value ? this.instantiate(value) : null
+        return value ? this.instantiate(value) : undefined
     }
 
     /**

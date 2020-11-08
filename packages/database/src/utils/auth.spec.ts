@@ -1,6 +1,6 @@
 import { suite, test } from '@testdeck/mocha'
 import { expect } from 'chai'
-import { promises } from 'fs'
+import { unlink, writeFile } from 'fs/promises'
 import { tmpdir } from 'os'
 import path from 'path'
 import { promisify } from 'util'
@@ -46,13 +46,13 @@ export class AuthUtils {
     async loadCertificateFromFile() {
         const file = path.join(tmpdir(), `test-${Math.random().toFixed(10).substr(2)}.pem`)
         const value = Buffer.from('test')
-        await promises.writeFile(file, value)
+        await writeFile(file, value)
 
         const loaded = await loadAuthCertificate(file)
         expect(loaded).to.exist
         expect(loaded?.toString()).to.equal(value.toString())
 
         // Cleanup
-        await promises.unlink(file)
+        await unlink(file)
     }
 }
