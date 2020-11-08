@@ -1,5 +1,5 @@
 {
-    "name": "@task/utils",
+    "name": "@task/cli",
     "version": "0.0.0",
     "private": true,
     "license": "GPL-3.0",
@@ -8,12 +8,16 @@
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
+        "cli": "ts-node --files ./src/index.ts",
         "build": "tsc -p tsconfig.production.json",
         "watch": "tsc -p tsconfig.production.json -w",
         "test": "mocha --parallel",
         "coverage": "nyc mocha",
         "lint": "tslint --fix --project .",
         "prepublishOnly": "yarn build"
+    },
+    "bin": {
+        "cli": "./dist/index.js"
     },
     "nyc": {
         "extension": [
@@ -32,12 +36,18 @@
         "@types/chai": "^4.2.14",
         "@types/convict": "^5.2.1",
         "@types/node": "^14.14.6",
-        "chai": "^4.2.0"
+        "@types/yargs": "^15.0.9",
+        "chai": "^4.2.0",
+        "ts-mockito": "^2.6.1"
     },
     "dependencies": {
+        "@task/database": "^0.0.0",
+        "@task/pubsub": "^0.0.0",
+        "@task/utils": "^0.0.0",
         "convict": "^6.0.0",
         "reflect-metadata": "^0.1.13",
-        "ts-mockito": "^2.6.1",
-        "tsyringe": "^4.3.0"
+        "rxjs": "^6.6.3",
+        "tsyringe": "^4.3.0",
+        "yargs": "^16.1.0"
     }
 }
