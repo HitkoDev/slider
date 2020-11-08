@@ -1,4 +1,6 @@
 import { singleton } from 'tsyringe'
+import { MessageTypes } from '../messages'
+import { encodeMessage } from '../utils/encoder'
 import { Redis } from './redis'
 
 @singleton()
@@ -8,7 +10,7 @@ export class Publisher {
         protected readonly redis: Redis
     ) { }
 
-    async publish(channel: string, message: string) {
-        await this.redis.publish(channel, message)
+    async publish<T extends keyof MessageTypes>(channel: T, message: MessageTypes[T]) {
+        await this.redis.publish(channel, encodeMessage(message))
     }
 }

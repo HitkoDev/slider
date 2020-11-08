@@ -1,7 +1,10 @@
+import { ObjectID } from '@task/database'
 import { suite, test } from '@testdeck/mocha'
 import { expect } from 'chai'
 import { container, DependencyContainer } from 'tsyringe'
 import { RedisMock } from '../../test/services/redis'
+import { Channel, MessageTypes } from '../messages'
+import { decodeMessage } from '../utils/encoder'
 import { Publisher } from './publisher'
 import { Redis } from './redis'
 
@@ -30,8 +33,12 @@ export class PublisherService {
 
     @test
     async publish() {
-        const channelName = 'testChannel'
-        const value = 'test'
+        const channelName = Channel.Tracking
+        const value: MessageTypes[Channel.Tracking] = {
+            accountId: new ObjectID(),
+            timestamp: new Date(),
+            data: 'test'
+        }
 
         const publisher = this.childContainer.resolve(Publisher)
 
@@ -53,6 +60,6 @@ export class PublisherService {
 
         const result = await done
         expect(result.channel).to.equal(channelName)
-        expect(result.message).to.equal(value)
+        expect(decodeMessage(result.message)).to.deep.equal(value)
     }
 }

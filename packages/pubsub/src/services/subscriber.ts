@@ -1,6 +1,8 @@
 import { Observable, Subject } from 'rxjs'
 import { publish, refCount } from 'rxjs/operators'
 import { singleton } from 'tsyringe'
+import { MessageTypes } from '../messages'
+import { decodeMessage } from '../utils/encoder'
 import { Redis } from './redis'
 
 @singleton()
@@ -8,7 +10,7 @@ export class Subscriber {
 
     protected readonly subscriptions = new Map<string, {
         subject: Subject<string>
-        observable: Observable<string>
+        observable: Observable<MessageTypes[keyof MessageTypes]>
     }>()
     protected ended = false
 
@@ -28,11 +30,15 @@ export class Subscriber {
         })
     }
 
-    subscribe(channel: string) {
+    subscribe<T extends keyof MessageTypes>(channel: T) {
         if (!this.subscriptions.has(channel)) {
             const subject = new Subject<string>()
-            const observable = new Observable<string>(sub => {
-                const subscription = subject.subscribe(sub)
+            const observable = new Observable<MessageTypes[T]>(sub => {
+                const subscription = subject.subscribe({
+                    next: (val) => sub.next(decodeMessage(val) as MessageTypes[T]),
+                    complete: () => sub.complete(),
+                    error: (err) => sub.error(err)
+                })
 
                 if (subject.closed || this.ended) {
                     // There won't be any new messages
