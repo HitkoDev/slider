@@ -1,6 +1,6 @@
 {
     "name": "@task/database",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "private": true,
     "license": "GPL-3.0",
     "main": "dist/index.js",
@@ -35,7 +35,7 @@
         "mongodb-memory-server": "^6.9.2"
     },
     "dependencies": {
-        "@task/utils": "^0.0.0",
+        "@task/utils": "^0.1.0",
         "@types/mongodb": "^3.5.33",
         "bson-ext": "^2.0.5",
         "mongodb": "^3.6.3",

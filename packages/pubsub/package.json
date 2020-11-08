@@ -1,6 +1,6 @@
 {
     "name": "@task/pubsub",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "private": true,
     "license": "GPL-3.0",
     "main": "dist/index.js",
@@ -37,8 +37,8 @@
     },
     "dependencies": {
         "@msgpack/msgpack": "^2.3.0",
-        "@task/database": "^0.0.0",
-        "@task/utils": "^0.0.0",
+        "@task/database": "^0.1.0",
+        "@task/utils": "^0.1.0",
         "ioredis": "^4.19.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^6.6.3",
