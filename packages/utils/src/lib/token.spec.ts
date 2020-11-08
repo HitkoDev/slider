@@ -6,7 +6,7 @@ import { createToken } from './token'
 // tslint:disable: no-unused-expression
 
 @suite
-export class ConfigToken {
+export class TokenLib {
 
     childContainer: DependencyContainer
 

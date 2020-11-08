@@ -30,10 +30,12 @@
     "devDependencies": {
         "@testdeck/mocha": "^0.1.2",
         "@types/chai": "^4.2.14",
+        "@types/convict": "^5.2.1",
         "@types/node": "^14.14.6",
         "chai": "^4.2.0"
     },
     "dependencies": {
+        "convict": "^6.0.0",
         "reflect-metadata": "^0.1.13",
         "tsyringe": "^4.3.0"
     }
