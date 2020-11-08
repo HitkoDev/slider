@@ -1,7 +1,7 @@
 import { assertIsDefined } from '@task/utils'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { Lifecycle, scoped } from 'tsyringe'
-import { Connection } from '../src/connection'
+import { Connection } from '../connection'
 
 @scoped(Lifecycle.ContainerScoped)
 export class ConnectionMock extends Connection {

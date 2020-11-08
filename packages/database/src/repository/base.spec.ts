@@ -2,8 +2,8 @@ import { suite, test } from '@testdeck/mocha'
 import { expect } from 'chai'
 import { Db, ObjectID } from 'mongodb'
 import { container, DependencyContainer, injectable } from 'tsyringe'
-import { ConnectionMock } from '../../test/connection'
 import { Connection } from '../connection'
+import { ConnectionMock } from '../testing/connection'
 import { MongoRepository } from './base'
 import { Model } from './model'
 import { Type } from './type'
@@ -113,7 +113,7 @@ export class RepositoryBase {
         expect(model4).to.be.instanceOf(TestModel)
         expect(model1._id.toHexString()).to.equal(model4?._id.toHexString())
         const model5 = await repository.findById(model1._id)
-        expect(model5).to.be.null
+        expect(model5).to.be.undefined
     }
 
     @test
@@ -139,7 +139,7 @@ export class RepositoryBase {
 
         const model = await repository.findById(id)
 
-        expect(model).to.be.null
+        expect(model).to.be.undefined
     }
 
     @test
