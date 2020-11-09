@@ -91,7 +91,8 @@ export class Expenses extends HTMLElement {
             this.updateChildren()
         })
         this.mutationObserver.observe(this, {
-            childList: true
+            childList: true,
+            subtree: true
         })
 
         this.updateTitle()
