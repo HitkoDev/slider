@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/HitkoDev/slider/compare/v0.2.0...v0.2.1) (2020-11-09)
+
+
+### Bug Fixes
+
+* **slider:** recognise added / removed sliders in expense component ([793d332](https://github.com/HitkoDev/slider/commit/793d3328e219743e1e89adb3d5a660c8d4cee1f5))
+
+
+
+
+
 # [0.2.0](https://github.com/HitkoDev/slider/compare/v0.1.0...v0.2.0) (2020-11-09)
 
 
