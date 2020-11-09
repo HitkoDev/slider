@@ -30,18 +30,36 @@ window.addEventListener('mousemove', (event) => {
 })
 
 export interface SliderValue {
+    /**
+     * Minimum slider value
+     */
     min: number
+    /**
+     * Maximum slider value
+     */
     max: number
+    /**
+     * Slider value
+     */
     value: number
+    /**
+     * Slider radius
+     */
     radius: number
+    /**
+     * Slider color
+     */
     color: string
+    /**
+     * Slider title
+     */
     title: string
 }
 
 /**
- * Reusable
+ * Reusable radial slider component
  */
-export class Slider extends HTMLElement {
+export class Slider extends HTMLElement implements SliderValue {
 
     static get observedAttributes() {
         return [
