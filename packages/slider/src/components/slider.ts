@@ -29,6 +29,12 @@ window.addEventListener('mousemove', (event) => {
     }
 })
 
+window.addEventListener('touchmove', (event) => {
+    if (activeSlider) {
+        activeSlider.touchListener(event)
+    }
+}, { passive: false })
+
 export interface SliderValue {
     /**
      * Minimum slider value
@@ -214,29 +220,29 @@ export class Slider extends HTMLElement implements SliderValue {
             event.stopPropagation()
         }
 
-        const touchListener = (event: TouchEvent) => {
-            // Find this slider's touch event
-            const touch = Array.from(event.touches).find(t => t?.target == this.indicator || t?.target == this.clickTarget)
-            if (touch) {
-                this.setValueFromPoint({ x: touch.clientX, y: touch.clientY }, true)
-                event.stopPropagation()
-                if (event.cancelable)
-                    event.preventDefault()
-            }
-        }
-
         this.indicator.addEventListener('mousedown', mouseStartListener)
-        this.indicator.addEventListener('touchstart', touchListener, { passive: false })
-        this.indicator.addEventListener('touchmove', touchListener, { passive: false })
+        this.indicator.addEventListener('touchstart', this.touchListener, { passive: false })
+        this.indicator.addEventListener('touchmove', this.touchListener, { passive: false })
 
         this.clickTarget.addEventListener('mousedown', mouseStartListener)
-        this.clickTarget.addEventListener('touchstart', touchListener, { passive: false })
-        this.clickTarget.addEventListener('touchmove', touchListener, { passive: false })
+        this.clickTarget.addEventListener('touchstart', this.touchListener, { passive: false })
+        this.clickTarget.addEventListener('touchmove', this.touchListener, { passive: false })
 
         this.updateRadius()
         this.updateValue()
         this.updateColor()
         this.updateTitle()
+    }
+
+    readonly touchListener = (event: TouchEvent) => {
+        // Find this slider's touch event
+        const touch = Array.from(event.touches).find(t => t?.target == this.indicator || t?.target == this.clickTarget)
+        if (touch) {
+            this.setValueFromPoint({ x: touch.clientX, y: touch.clientY }, true)
+            event.stopPropagation()
+            if (event.cancelable)
+                event.preventDefault()
+        }
     }
 
     setState(options: Partial<SliderValue>) {
