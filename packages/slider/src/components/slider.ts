@@ -12,7 +12,8 @@ function endSlider(event: Event) {
     if (activeSlider) {
         activeSlider = undefined
         event.stopPropagation()
-        event.preventDefault()
+        if (event.cancelable)
+            event.preventDefault()
     }
 }
 
@@ -201,7 +202,8 @@ export class Slider extends HTMLElement {
             if (touch) {
                 this.setValueFromPoint({ x: touch.clientX, y: touch.clientY }, true)
                 event.stopPropagation()
-                event.preventDefault()
+                if (event.cancelable)
+                    event.preventDefault()
             }
         }
 
