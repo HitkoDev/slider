@@ -133,6 +133,28 @@ export class RepositoryBase {
     }
 
     @test
+    async createMany() {
+        const repository = this.childContainer.resolve(TestRepository)
+        const value1 = 'test1'
+        const value2 = 'test2'
+
+        const models = await repository.createMany([
+            {
+                field: value1
+            },
+            {
+                field: value2
+            }
+        ])
+
+        expect(models.length).to.equal(2)
+        for (const model of models)
+            expect(model).to.be.instanceOf(TestModel)
+        expect(models[0].field).to.equal(value1)
+        expect(models[1].field).to.equal(value2)
+    }
+
+    @test
     async findNonExisting() {
         const repository = this.childContainer.resolve(TestRepository)
         const id = new ObjectID()
@@ -151,6 +173,7 @@ export class RepositoryBase {
         expect(model.field).to.equal(value)
         const updated = await repository.update(model._id, {})
         expect(updated?.field).to.equal(value)
+        expect(updated).to.be.instanceOf(TestModel)
         expect(model._id.toHexString()).to.equal(updated?._id.toHexString())
     }
 }

@@ -46,6 +46,13 @@ export class MongoRepository<T extends Model = Model, TCreateInput = BasicCreate
         return this.instantiate(result.ops[0])
     }
 
+    async createMany(data: TCreateInput[]) {
+        await this.initPromise
+        if (data.length === 0) return []
+        const result = await this.col.insertMany(data as any)
+        return result.ops.map(this.instantiate, this)
+    }
+
     async update(id: ObjectID, data: TUpdateInput) {
         await this.initPromise
         if (Object.keys(data).length < 1)
