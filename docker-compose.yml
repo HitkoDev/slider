@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo:4
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./mongod.conf:/etc/mongod.conf
+      - mongodata:/data/db
+    command: mongod --config /etc/mongod.conf
+
+  redis:
+    image: redis
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: host
+
+volumes:
+  mongodata:
