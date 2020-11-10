@@ -18,6 +18,11 @@ yargs
                 alias: 'p',
                 type: 'number',
                 desc: 'The port to bind to'
+            })
+            .option('sample', {
+                alias: 's',
+                type: 'boolean',
+                desc: 'Generate sample accounts'
             }),
         async (args) => {
             try {

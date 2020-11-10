@@ -4,7 +4,7 @@ import { IncomingMessage, ServerResponse } from 'http'
 import Koa from 'koa'
 import Router from 'koa-router'
 import { container, DependencyContainer } from 'tsyringe'
-import { MONGODB_DB, MONGODB_URI, MONGODB_X509 } from '../../database/dist'
+import { AccountRepository, MONGODB_DB, MONGODB_URI, MONGODB_X509 } from '../../database/dist'
 import { REDIS_AUTH, REDIS_URI } from '../../pubsub/dist'
 import { CONFIG, ConfigurationSchema } from './config/schema'
 import { AppContext, AppCustomContext, APP_CONTEXT } from './context'
@@ -60,11 +60,15 @@ export async function startApp(args?: {
      */
     config?: string
     /**
-     *
+     *  Port to bind to
      */
     port?: number
+    /**
+     * If true, ensure sample accounts exist
+     */
+    sample?: boolean
 }) {
-    const { config, port = 8080 } = args || {}
+    const { config, port = 8080, sample } = args || {}
 
     if (config)
         await loadConfigFile(config, ConfigurationSchema)
@@ -75,6 +79,27 @@ export async function startApp(args?: {
 
     container.register(REDIS_URI, { useFactory: (c) => c.resolve(CONFIG).redis.uri })
     container.register(REDIS_AUTH, { useFactory: (c) => c.resolve(CONFIG).redis.auth })
+
+    if (sample) {
+        const accountRepository = container.resolve(AccountRepository)
+        const accounts = await accountRepository.createMany([
+            {
+                name: 'user 1',
+                isActive: true
+            },
+            {
+                name: 'user 2',
+                isActive: true
+            },
+            {
+                name: 'inactive',
+                isActive: false
+            }
+        ])
+        console.log(`Sample users:`)
+        for (const account of accounts)
+            console.log(`${account.name}: ${account._id.toHexString()}`)
+    }
 
     const app = await buildApp(container)
     app.listen(port)
