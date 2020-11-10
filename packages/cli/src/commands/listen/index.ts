@@ -3,7 +3,7 @@ import { CommandModule } from 'yargs'
 import { GlobalArgs } from '../..'
 
 export interface ListenArgs extends GlobalArgs {
-    account?: string
+    account?: string | string[]
 }
 
 export const listen: CommandModule<GlobalArgs, ListenArgs> = {

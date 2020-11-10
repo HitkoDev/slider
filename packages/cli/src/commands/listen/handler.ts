@@ -1,4 +1,3 @@
-import { ObjectID } from '@task/database'
 import { Subscriber } from '@task/pubsub'
 import { Channel } from '@task/pubsub/dist/messages'
 import { from } from 'rxjs'
@@ -14,9 +13,10 @@ export class ListenHandler {
     ) { }
 
     async handle(args: ListenArgs) {
-        const accountId = args.account
-            ? new ObjectID(args.account)
-            : undefined
+        const ids = new Set(Array.isArray(args.account)
+            ? args.account
+            : args.account && [args.account] || []
+        )
 
         let error: any
 
@@ -31,7 +31,7 @@ export class ListenHandler {
 
         const sub = messages$
             .subscribe(msg => {
-                if (accountId && !msg.accountId.equals(accountId))
+                if (ids.size && !ids.has(msg.accountId.toHexString()))
                     return
 
                 console.log(`[${msg.timestamp}] ${msg.accountId.toHexString()}: "${msg.data}"`)

@@ -107,4 +107,47 @@ export class Listen {
         const [log] = capture(this.ConsoleMock.log).byCallIndex(0)
         expect(log).to.equal(`[${ts}] ${id2.toHexString()}: "${data2}"`)
     }
+
+    @test
+    async filterMultiple() {
+        const id = new ObjectID()
+        const id2 = new ObjectID()
+        const id3 = new ObjectID()
+        const ts = new Date()
+        const data = 'test'
+        const data2 = 'foo'
+        const data3 = 'bar'
+
+        this.handler.handle({
+            account: [
+                id2.toHexString(),
+                id3.toHexString()
+            ]
+        })
+            .catch()
+
+        this.messages$.next({
+            accountId: id,
+            timestamp: ts,
+            data
+        })
+
+        this.messages$.next({
+            accountId: id2,
+            timestamp: ts,
+            data: data2
+        })
+
+        this.messages$.next({
+            accountId: id3,
+            timestamp: ts,
+            data: data3
+        })
+
+        // First message should be ignored
+        const [log1] = capture(this.ConsoleMock.log).first()
+        expect(log1).to.equal(`[${ts}] ${id2.toHexString()}: "${data2}"`)
+        const [log2] = capture(this.ConsoleMock.log).last()
+        expect(log2).to.equal(`[${ts}] ${id3.toHexString()}: "${data3}"`)
+    }
 }
