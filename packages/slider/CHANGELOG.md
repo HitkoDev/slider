@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/HitkoDev/slider/compare/v0.2.1...v0.3.0) (2020-11-10)
+
+
+### Bug Fixes
+
+* **slider:** improve mobile touch event capture ([bc19298](https://github.com/HitkoDev/slider/commit/bc19298fead1f26644eec22ed99a19f279fea2db))
+
+
+
+
+
 ## [0.2.1](https://github.com/HitkoDev/slider/compare/v0.2.0...v0.2.1) (2020-11-09)
 
 

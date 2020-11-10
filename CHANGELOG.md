@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/HitkoDev/slider/compare/v0.2.1...v0.3.0) (2020-11-10)
+
+
+### Bug Fixes
+
+* **slider:** improve mobile touch event capture ([bc19298](https://github.com/HitkoDev/slider/commit/bc19298fead1f26644eec22ed99a19f279fea2db))
+
+
+### Features
+
+* **api:** add option to generate sample accounts ([499e3b7](https://github.com/HitkoDev/slider/commit/499e3b795d14b0e6425fd4558dbead7ffc90a813))
+* **cli:** filter by multiple ids ([9043b6e](https://github.com/HitkoDev/slider/commit/9043b6e71bf6e6e6a19b78baadf2bb36c919ba18))
+* **database:** create many ([6312ec5](https://github.com/HitkoDev/slider/commit/6312ec50125bd91ced7c72246585df6c33485554))
+
+
+
+
+
 ## [0.2.1](https://github.com/HitkoDev/slider/compare/v0.2.0...v0.2.1) (2020-11-09)
 
 

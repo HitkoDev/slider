@@ -1,6 +1,6 @@
 {
     "name": "@task/cli",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "private": true,
     "license": "GPL-3.0",
     "main": "dist/index.js",
@@ -41,9 +41,9 @@
         "ts-mockito": "^2.6.1"
     },
     "dependencies": {
-        "@task/database": "^0.2.0",
-        "@task/pubsub": "^0.2.0",
-        "@task/utils": "^0.2.0",
+        "@task/database": "^0.3.0",
+        "@task/pubsub": "^0.3.0",
+        "@task/utils": "^0.3.0",
         "convict": "^6.0.0",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^6.6.3",
