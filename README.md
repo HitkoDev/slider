@@ -61,13 +61,17 @@ If MongoDB or Redis require authentication or use custom ports, you can create a
 ```json
 {
     "redis": {
-        "uri": "redis://localhost:6379/6",
+        "url": "redis://localhost:6379/6",
         "auth": ""
     },
     "mongodb": {
-        "uri": "mongodb://localhost:27017",
+        "url": "mongodb://localhost:27017",
         "db": "task",
         "x509": "/path/to/file.pem"
     }
 }
 ```
+
+# See also
+
+For further explanation about each package, see `README.md` files of each package.

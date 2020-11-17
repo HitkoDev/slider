@@ -9,7 +9,7 @@ export interface ListenArgs extends GlobalArgs {
 export const listen: CommandModule<GlobalArgs, ListenArgs> = {
 
     command: 'listen',
-    describe: 'Listen for messages, and print output them to stdout',
+    describe: 'Listen for messages, and output them to stdout',
 
     builder(argv) {
         return argv

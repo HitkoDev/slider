@@ -9,11 +9,11 @@ export const ConfigurationSchema = convict({
         env: 'NODE_ENV'
     },
     redis: {
-        uri: {
-            doc: 'Redis connection URI',
+        url: {
+            doc: 'Redis connection URL',
             format: '*',
             default: 'redis://localhost:6379/6',
-            env: 'REDIS_URI'
+            env: 'REDIS_URL'
         },
         auth: {
             doc: 'Redis auth string',

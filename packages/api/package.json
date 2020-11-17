@@ -17,6 +17,9 @@
         "lint": "tslint --fix --project .",
         "prepublishOnly": "yarn build"
     },
+    "bin": {
+        "api": "./dist/index.js"
+    },
     "nyc": {
         "extension": [
             ".ts"

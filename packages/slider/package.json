@@ -4,9 +4,6 @@
     "private": true,
     "license": "GPL-3.0",
     "main": "dist/index.js",
-    "esnext": "dist/index.js",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
     "scripts": {
         "start:dev": "webpack serve --config webpack.config.ts",
         "build": "webpack --config webpack.config.production.ts",

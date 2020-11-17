@@ -3,12 +3,12 @@ import RedisImpl from 'ioredis'
 import { inject, singleton } from 'tsyringe'
 
 /**
- * Redis URI including the database number
+ * Redis URL including the database number
  *
  * @example `redis://localhost:6379/5`
  */
-export const REDIS_URI = createToken<string>({
-    name: 'REDIS_URI'
+export const REDIS_URL = createToken<string>({
+    name: 'REDIS_URL'
 })
 
 /**
@@ -25,14 +25,14 @@ export const REDIS_AUTH = createToken<string>({
 export class Redis extends RedisImpl {
 
     constructor(
-        @inject(REDIS_URI)
-        uri: string,
+        @inject(REDIS_URL)
+        url: string,
         @inject(REDIS_AUTH)
         auth?: string
     ) {
         if (auth)
-            super(uri, { password: auth })
+            super(url, { password: auth })
         else
-            super(uri)
+            super(url)
     }
 }

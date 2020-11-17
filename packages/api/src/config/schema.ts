@@ -9,11 +9,11 @@ export const ConfigurationSchema = convict({
         env: 'NODE_ENV'
     },
     redis: {
-        uri: {
-            doc: 'Redis connection URI',
+        url: {
+            doc: 'Redis connection URL',
             format: '*',
             default: 'redis://localhost:6379/6',
-            env: 'REDIS_URI'
+            env: 'REDIS_URL'
         },
         auth: {
             doc: 'Redis auth string',
@@ -23,11 +23,11 @@ export const ConfigurationSchema = convict({
         }
     },
     mongodb: {
-        uri: {
-            doc: 'Mongo connection URI',
+        url: {
+            doc: 'Mongo connection URL',
             format: '*',
             default: 'mongodb://localhost:27017',
-            env: 'MONGODB_URI'
+            env: 'MONGODB_URL'
         },
         db: {
             doc: 'Mongo database name to use',

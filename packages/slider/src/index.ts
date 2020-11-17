@@ -1,3 +1,2 @@
-import './components/container'
-import './components/expenses'
-import './components/slider'
+export * from './components/container'
+export * from './components/slider'

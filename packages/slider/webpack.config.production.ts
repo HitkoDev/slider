@@ -13,8 +13,7 @@ config.module?.rules?.
 export default merge(config, {
     mode: 'production',
     output: {
-        filename: '[name].[chunkhash:5].js',
-        chunkFilename: '[id].[contenthash:5].js',
+        filename: '[name].js',
         publicPath: '.'
     },
     devtool: 'hidden-source-map',

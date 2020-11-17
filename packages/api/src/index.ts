@@ -34,4 +34,5 @@ yargs
         }
     )
     .help()
+    .scriptName('api')
     .argv

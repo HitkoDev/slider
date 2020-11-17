@@ -32,13 +32,13 @@ export class ConnectionMock extends Connection {
     }
 
     constructor(
-        uri = ConnectionMock.connectionString,
+        url = ConnectionMock.connectionString,
         db = ConnectionMock.dbName
     ) {
         const msg = 'ConnectionMock.start shoud be run before using ConnectionMock mock.'
-        assertIsDefined(uri, msg)
+        assertIsDefined(url, msg)
         assertIsDefined(db, msg)
-        super(uri, db, '')
+        super(url, db, '')
     }
 
     public async clear() {

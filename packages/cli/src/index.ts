@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { REDIS_AUTH, REDIS_URI } from '@task/pubsub'
+import { REDIS_AUTH, REDIS_URL } from '@task/pubsub'
 import { loadConfigFile } from '@task/utils'
 import { container } from 'tsyringe'
 import yargs from 'yargs'
@@ -23,10 +23,11 @@ yargs
         if (args.config)
             await loadConfigFile(args.config, ConfigurationSchema)
 
-        container.register(REDIS_URI, { useFactory: (c) => c.resolve(CONFIG).redis.uri })
+        container.register(REDIS_URL, { useFactory: (c) => c.resolve(CONFIG).redis.url })
         container.register(REDIS_AUTH, { useFactory: (c) => c.resolve(CONFIG).redis.auth })
     })
     .command(listen)
     .demandCommand()
+    .scriptName('cli')
     .help()
     .argv

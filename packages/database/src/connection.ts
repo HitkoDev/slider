@@ -4,12 +4,12 @@ import { createToken } from '../../utils/dist/config/token'
 import { loadAuthCertificate } from './utils/auth'
 
 /**
- * Mongodb uri
+ * Mongodb url
  *
  * @example `mongodb://localhost:27017`
  */
-export const MONGODB_URI = createToken<string>({
-    name: 'MONGODB_URI'
+export const MONGODB_URL = createToken<string>({
+    name: 'MONGODB_URL'
 })
 
 /**
@@ -49,8 +49,8 @@ export class Connection {
     private _connectPromise: Promise<Db> | undefined
 
     constructor(
-        @inject(MONGODB_URI)
-        protected readonly uri: string,
+        @inject(MONGODB_URL)
+        protected readonly url: string,
         @inject(MONGODB_DB)
         protected readonly database: string,
         @inject(MONGODB_X509)
@@ -63,7 +63,7 @@ export class Connection {
     async connect() {
         if (!this._connectPromise) {
             this._connectPromise = loadAuthCertificate(this.x509)
-                .then((pem) => MongoClient.connect(this.uri, {
+                .then((pem) => MongoClient.connect(this.url, {
                     useNewUrlParser: true,
                     useUnifiedTopology: true,
                     ...pem

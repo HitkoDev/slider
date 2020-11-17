@@ -14,7 +14,8 @@ const config: Configuration = {
         port: 5080
     },
     entry: {
-        app: './src/index.ts'
+        index: './src/index.ts',
+        app: './src/app.ts'
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -70,7 +71,17 @@ const config: Configuration = {
         new HtmlWebpackPlugin({
             chunks: ['app'],
             template: './src/index.ejs',
-            hash: false
+            hash: false,
+            minify: {
+                collapseWhitespace: true,
+                keepClosingSlash: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true,
+                minifyCSS: true
+            }
         })
     ]
 }

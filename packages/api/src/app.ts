@@ -4,8 +4,8 @@ import { IncomingMessage, ServerResponse } from 'http'
 import Koa from 'koa'
 import Router from 'koa-router'
 import { container, DependencyContainer } from 'tsyringe'
-import { AccountRepository, MONGODB_DB, MONGODB_URI, MONGODB_X509 } from '../../database/dist'
-import { REDIS_AUTH, REDIS_URI } from '../../pubsub/dist'
+import { AccountRepository, MONGODB_DB, MONGODB_URL, MONGODB_X509 } from '../../database/dist'
+import { REDIS_AUTH, REDIS_URL } from '../../pubsub/dist'
 import { CONFIG, ConfigurationSchema } from './config/schema'
 import { AppContext, AppCustomContext, APP_CONTEXT } from './context'
 import { accountRoutes } from './routes/account'
@@ -73,11 +73,11 @@ export async function startApp(args?: {
     if (config)
         await loadConfigFile(config, ConfigurationSchema)
 
-    container.register(MONGODB_URI, { useFactory: (c) => c.resolve(CONFIG).mongodb.uri })
+    container.register(MONGODB_URL, { useFactory: (c) => c.resolve(CONFIG).mongodb.url })
     container.register(MONGODB_DB, { useFactory: (c) => c.resolve(CONFIG).mongodb.db })
     container.register(MONGODB_X509, { useFactory: (c) => c.resolve(CONFIG).mongodb.x509 })
 
-    container.register(REDIS_URI, { useFactory: (c) => c.resolve(CONFIG).redis.uri })
+    container.register(REDIS_URL, { useFactory: (c) => c.resolve(CONFIG).redis.url })
     container.register(REDIS_AUTH, { useFactory: (c) => c.resolve(CONFIG).redis.auth })
 
     if (sample) {
