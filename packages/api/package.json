@@ -1,6 +1,6 @@
 {
     "name": "@task/api",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "private": true,
     "license": "GPL-3.0",
     "main": "dist/index.js",
@@ -48,9 +48,9 @@
     },
     "dependencies": {
         "@koa/cors": "^3.1.0",
-        "@task/database": "^0.3.0",
-        "@task/pubsub": "^0.3.0",
-        "@task/utils": "^0.3.0",
+        "@task/database": "^0.3.1",
+        "@task/pubsub": "^0.3.1",
+        "@task/utils": "^0.3.1",
         "convict": "^6.0.0",
         "koa": "^2.13.0",
         "koa-router": "^10.0.0",
