@@ -1,7 +1,7 @@
 import style from './container.scss'
 import { Slider, SLIDER_WIDTH } from './slider'
 
-const STEP = SLIDER_WIDTH * 1.55555
+const STEP = Math.round(SLIDER_WIDTH * 1.55555)
 
 /**
  * Responsive container for one or more sliders

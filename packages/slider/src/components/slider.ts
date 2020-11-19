@@ -1,8 +1,8 @@
 import style from './slider.scss'
 
 export const SLIDER_WIDTH = 18
-const SLIDER_PADDING = SLIDER_WIDTH * 0.7222
-const INDICATOR_RADIUS = SLIDER_WIDTH * 0.66667
+const SLIDER_PADDING = Math.round(SLIDER_WIDTH * 0.72222)
+const INDICATOR_RADIUS = Math.round(SLIDER_WIDTH * 0.66667)
 
 const VALUE_ATTRIBUTES = new Set<string | number | symbol>(['min', 'max', 'value', 'radius'])
 
@@ -193,10 +193,12 @@ export class Slider extends HTMLElement implements SliderValue {
 
         this.fillBorder = document.createElementNS('http://www.w3.org/2000/svg', 'path')
         this.fillBorder.classList.add(style.locals.border)
+        this.fillBorder.style.strokeWidth = `${SLIDER_WIDTH}px`
         this.svg.appendChild(this.fillBorder)
 
         this.baseBorder = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
         this.baseBorder.classList.add(style.locals.border)
+        this.baseBorder.style.strokeWidth = `${SLIDER_WIDTH}px`
         this.svg.appendChild(this.baseBorder)
 
         this.clickTarget = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
@@ -361,7 +363,8 @@ export class Slider extends HTMLElement implements SliderValue {
     private caclulateValueParams() {
         const r = this.radius
         const innerR = r - SLIDER_PADDING
-        const value = (this.value - this.min) / (this.max - this.min)
+        let value = (this.value - this.min) / (this.max - this.min)
+        value = Math.min(1, Math.max(0, value))
         const angle = (2.5 * Math.PI) - (2 * Math.PI * value)
 
         let x = Math.cos(angle) * innerR + r
